@@ -23,6 +23,10 @@ mongoose.connect(config.mongoURI , {
 
 app.get('/', (req, res) => res.send('Hello World!! 안녕하세요!!'));
 
+app.get('/api/hello', (req, res) => {
+  res.send('안녕하세요')
+})
+
 app.post('/api/users/register', (req, res) => {
   // 회원 가입할 때 필요한 정보들을 client에서 가져오면
   // 그것들을 데이터 베이스에 넣어준다.
@@ -31,7 +35,7 @@ app.post('/api/users/register', (req, res) => {
   user.save((err, user) => {
     if(err) return res.json({ success: false, err });
     return res.status(200).json({
-      sucess: true
+      success: true
     })
   })
 });
@@ -61,7 +65,7 @@ app.post('/api/users/login', (req, res) => {
           // 토큰을 저장한다. 어디에 ? 쿠키, 로컬스토리지
           res.cookie("x_auth", user.token)
           .status(200)
-          .json({ loginSeuccess: true, userId: user._id });
+          .json({ loginSuccess: true, userId: user._id });
         })
     });
   })
@@ -78,7 +82,7 @@ app.get('/api/users/auth', auth, (req, res) => {
     isAuth: true,
     email: req.user.email,
     name: req.user.name,
-    lastname: req.user,lastname,
+    lastname: req.user.lastname,
     role: req.user.role,
     image: req.user.image
   })
